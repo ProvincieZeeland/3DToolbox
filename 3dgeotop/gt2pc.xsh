@@ -36,7 +36,7 @@ parser.add_argument(  "--color_table",
                       help = "Path to a table overriding the RGB values for each litho class.")
 parser.add_argument(  "--clipsrc",
                       default = None,
-                      help = "Clip geometries to one of [xmin ymin xmax ymax]|WKT|datasource|spat_extent.\nSee: https://gdal.org/programs/ogr2ogr.html#cmdoption-ogr2ogr-clipsrc")
+                      help = "Clip geometries to one of "xmin ymin xmax ymax"|WKT|datasource.\nSee: https://gdal.org/programs/ogr2ogr.html#cmdoption-ogr2ogr-clipsrc")
 parser.add_argument(  "--clipsrclayer",
                       default = None,
                       help = "Select the named layer from the source clip datasource.\nSee: https://gdal.org/programs/ogr2ogr.html#cmdoption-ogr2ogr-clipsrclayer")

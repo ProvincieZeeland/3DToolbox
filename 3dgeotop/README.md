@@ -110,9 +110,8 @@ options:
   --color_table COLOR_TABLE
                         Path to a table overriding the RGB values for each
                         litho class.
-  --clipsrc CLIPSRC     Clip geometries to one of [xmin ymin xmax
-                        ymax]|WKT|datasource|spat_extent. See:
-                        https://gdal.org/programs/ogr2ogr.html#cmdoption-
+  --clipsrc CLIPSRC     Clip geometries to one of "xmin ymin xmax ymax"|WKT|datasource. 
+  						See: https://gdal.org/programs/ogr2ogr.html#cmdoption-
                         ogr2ogr-clipsrc
   --clipsrclayer CLIPSRCLAYER
                         Select the named layer from the source clip
