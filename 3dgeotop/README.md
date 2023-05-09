@@ -8,7 +8,7 @@ Via het [BROloket](http://www.broloket.nl/) of [PDOK](http://www.pdok.nl/) kan h
 
 ## gt2pc
 
-Dit onderdeel van 3dgeotop is een converter of vanuit de csv betanden in de GeoTOP download een point cloud conform de 3dtiles standaard te maken. Zo'n point cloud kan vervolgens eenvoudig in Cesium worden getoond.
+Dit onderdeel van 3dgeotop is een converter om vanuit de csv betanden in de GeoTOP download een point cloud conform de 3dtiles standaard te maken. Zo'n point cloud kan vervolgens eenvoudig in Cesium worden getoond.
 
 ### Principe van de conversie
 
