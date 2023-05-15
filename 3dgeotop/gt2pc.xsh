@@ -36,7 +36,7 @@ parser.add_argument(  "--color_table",
                       help = "Path to a table overriding the RGB values for each litho class.")
 parser.add_argument(  "--clipsrc",
                       default = None,
-                      help = "Clip geometries to one of "xmin ymin xmax ymax"|WKT|datasource.\nSee: https://gdal.org/programs/ogr2ogr.html#cmdoption-ogr2ogr-clipsrc")
+                      help = 'Clip geometries to one of "xmin ymin xmax ymax"|WKT|datasource.\nSee: https://gdal.org/programs/ogr2ogr.html#cmdoption-ogr2ogr-clipsrc')
 parser.add_argument(  "--clipsrclayer",
                       default = None,
                       help = "Select the named layer from the source clip datasource.\nSee: https://gdal.org/programs/ogr2ogr.html#cmdoption-ogr2ogr-clipsrclayer")
@@ -63,7 +63,7 @@ if args.clipsrclayer: ogr_args.extend(["-clipsrclayer", args.clipsrclayer])
 
 ogr_args.extend(['-a_srs',f"EPSG:{ args.srs_in }", '-oo', 'AUTODETECT_TYPE=YES', '-oo', 'X_POSSIBLE_NAMES=x', '-oo', 'Y_POSSIBLE_NAMES=y', '-oo', 'Z_POSSIBLE_NAMES=z'])
 ogr_args.extend(['-dialect', 'sqlite'])
-ogr_args.extend(['-sql', f"select x,y,z * { args.multiplier },lut.klasse / 10, lut.R, lut.G, lut.B FROM { os.path.splitext(args.file)[0] } as sample { args.join_type } JOIN '{ args.color_table }'.lut as lut ON sample.lithoklasse = lut.klasse { where }" ])
+ogr_args.extend(['-sql', f"select x,y,z * { args.multiplier }, lut.klasse / 10, lut.R, lut.G, lut.B FROM { os.path.splitext(os.path.basename(args.file))[0] } as sample { args.join_type } JOIN '{ args.color_table }'.lut as lut ON sample.lithoklasse = lut.klasse { where }" ])
 ogr_args.extend(['-f', "CSV"])
 ogr_args.extend(["/vsistdout/", args.file])
 ogr_args.extend(["-lco", "SEPARATOR=SPACE", "-lco", "STRING_QUOTING=IF_NEEDED"])
