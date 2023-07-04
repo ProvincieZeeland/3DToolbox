@@ -10,7 +10,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install 'xonsh[full]'
 RUN pip3 install laspy[laszip]
 RUN pip3 install py3dtiles
-RUN pip3 install xontrib-argcomplete
+RUN pip3 install xontrib-argcomplete xontrib-sh
 
 # allow numba to do its thing even with unprivileged user
 ENV NUMBA_CACHE_DIR=/tmp

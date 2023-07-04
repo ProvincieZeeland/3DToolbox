@@ -7,9 +7,7 @@ $XONSH_HISTORY_BACKEND = 'dummy'
 
 
 $XONTRIB_SH_SHELLS = ['bash', 'sh']  # default
-xontrib load bash
-
-xontrib load argcomplete
+xontrib load sh argcomplete
 
 # ------------------------------------------------------------------------------
 # Temporary fixes of known issues
