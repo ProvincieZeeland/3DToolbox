@@ -1,0 +1,12 @@
+<OGRVRTDataSource> 
+    <OGRVRTLayer name="chloride_klassen"> 
+        <SrcDataSource>sample.csv</SrcDataSource> 
+        <GeometryType>wkbPoint</GeometryType> 
+        <LayerSRS>EPSG:28992</LayerSRS> 
+        <GeometryField encoding="PointFromColumns" x="XG+ Gravity Center+" y="YG+ Gravity Center+" "z"="ZG+ Gravity Center+"/> 
+        <Field name="sample" src="SN+ Sample Number (READONLY)+" type="Integer" />   
+        <Field name="laag" src="chloride_klassen{laag}" type="Real" />
+        <Field name="midden" src="chloride_klassen{midden}" type="Real" />
+        <Field name="hoog" src="chloride_klassen{hoog}" type="Real" />
+    </OGRVRTLayer> 
+</OGRVRTDataSource>

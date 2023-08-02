@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Example use:
+# Build the docker container with `docker build -t 3dfreshem ./3dfreshem`
+# Use this script as a command by copying it to your path, eg `/usr/bin/3dfreshem`
+# Then do a conversion with eg. `3dfreshem freshem2pc sample.csv`
+
+CWD="$(pwd)"
+
+docker run -u "$UID" -w "$CWD" -v "$CWD":"$CWD" --net host -e PYTHONUNBUFFERED=0 3dfreshem "$@"
+
