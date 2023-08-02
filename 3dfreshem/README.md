@@ -57,7 +57,7 @@ Dit onderdeel van 3dfreshem is een converter om vanuit de csv betanden in de fre
 
 ### Principe van de conversie
 
-`freshem2pc` gebruikt [py3dtiles](https://github.com/Oslandia/py3dtiles) voor het construeren van de point cloud in 3dtiles. `py3dtiles` kan helaas niet direct met de FRESHEM `.csv` bestanden uit de voeten. Een aantal zaken moeten aangepast:
+`freshem2pc` gebruikt [py3dtiles](https://gitlab.com/Oslandia/py3dtiles ) voor het construeren van de point cloud in 3dtiles. `py3dtiles` kan helaas niet direct met de FRESHEM `.csv` bestanden uit de voeten. Een aantal zaken moeten aangepast:
 
 - de juiste velden selecteren
 - de saliniteit omrekenen naar een RGB-waarde
