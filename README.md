@@ -7,6 +7,7 @@ In dit project wordt niet alleen tooling ontwikkeld en beschikbaar gesteld, maar
 Beschikbaar zijn:
 
 - 3dgeotop: Tools voor het werken met GeoTOP.
+- 3dfreshem: Tools voor het werken met freshem data
 - Cesium Terrain Builder om een "quantized mesh" terreinmodel te maken als ondergrond in Cesium.
 - Cesium Terrain Server om een "quantized mesh" terreinmodel te serveren voor gebruik in Cesium.
 
@@ -15,6 +16,11 @@ Beschikbaar zijn:
 Dit onderdeel van de 3DtoolboxNL richt zich op [GeoTOP (GTM)](https://basisregistratieondergrond.nl/inhoud-bro/registratieobjecten/modellen/geotop-gtm/). Als eerste is er `gt2pc` beschikbaar gekomen.
 
 Documentatie is [hier](3dgeotop) te vinden.
+
+## 3dfreshem
+
+
+Documentatie is [hier](3dfreshem) te vinden.
 
 ### gt2pc
 
