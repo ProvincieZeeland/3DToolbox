@@ -18,7 +18,7 @@ Dit onderdeel van de 3DtoolboxNL richt zich op [GeoTOP (GTM)](https://basisregis
 Documentatie is [hier](3dgeotop) te vinden.
 
 ## 3dfreshem
-
+Dit onderdeel van de 3DtoolboxNL richt zich op FRESHEM data. Meer info over deze dataset en een download is te vinden op: https://dataportaal.zeeland.nl/dataportaal/srv/dut/catalog.search#/metadata/5910b6c9-4020-4763-9586-abbf4a891d36
 
 Documentatie is [hier](3dfreshem) te vinden.
 
