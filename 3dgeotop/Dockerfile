@@ -27,4 +27,4 @@ COPY lut.csv /home/lut.csv
 RUN mkdir /.local /.cache /.config
 RUN chmod -R 777 /.local /.cache /.config /tmp
 
-CMD ["/usr/bin/gt2pc.xsh"]
+CMD ["/usr/bin/gt2pc"]
