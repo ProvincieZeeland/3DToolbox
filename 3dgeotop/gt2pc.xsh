@@ -34,6 +34,9 @@ parser.add_argument(  "--srs_out",
 parser.add_argument(  "--color_table",
                       default = '/home/lut.csv',
                       help = "Path to a table overriding the RGB values for each litho class.")
+parser.add_argument(  "--classification",
+                      default = True,
+                      help = "Whether to include a classification attribute in the tiles.")
 parser.add_argument(  "--clipsrc",
                       default = None,
                       help = 'Clip geometries to one of "xmin ymin xmax ymax"|WKT|datasource.\nSee: https://gdal.org/programs/ogr2ogr.html#cmdoption-ogr2ogr-clipsrc')
@@ -63,7 +66,12 @@ if args.clipsrclayer: ogr_args.extend(["-clipsrclayer", args.clipsrclayer])
 
 ogr_args.extend(['-a_srs',f"EPSG:{ args.srs_in }", '-oo', 'AUTODETECT_TYPE=YES', '-oo', 'X_POSSIBLE_NAMES=x', '-oo', 'Y_POSSIBLE_NAMES=y', '-oo', 'Z_POSSIBLE_NAMES=z'])
 ogr_args.extend(['-dialect', 'sqlite'])
-ogr_args.extend(['-sql', f"select x,y,z * { args.multiplier }, lut.klasse / 10, lut.R, lut.G, lut.B FROM { os.path.splitext(os.path.basename(args.file))[0] } as sample { args.join_type } JOIN '{ args.color_table }'.lut as lut ON sample.lithoklasse = lut.klasse { where }" ])
+
+if args.classification:
+  ogr_args.extend(['-sql', f"select x,y,z * { args.multiplier }, 1, lut.R, lut.G, lut.B, lut.klasse FROM { os.path.splitext(os.path.basename(args.file))[0] } as sample { args.join_type } JOIN '{ args.color_table }'.lut as lut ON sample.lithoklasse = lut.klasse { where }" ])
+else:
+  ogr_args.extend(['-sql', f"select x,y,z * { args.multiplier }, lut.klasse / 10, lut.R, lut.G, lut.B FROM { os.path.splitext(os.path.basename(args.file))[0] } as sample { args.join_type } JOIN '{ args.color_table }'.lut as lut ON sample.lithoklasse = lut.klasse { where }" ])
+
 ogr_args.extend(['-f', "CSV"])
 ogr_args.extend(["/vsistdout/", args.file])
 ogr_args.extend(["-lco", "SEPARATOR=SPACE", "-lco", "STRING_QUOTING=IF_NEEDED"])
@@ -81,6 +89,7 @@ if args.verbose:
 py3dt_args.extend(["--srs_in", args.srs_in])
 py3dt_args.extend(["--srs_out", args.srs_out])
 py3dt_args.extend(["--out", args.out])
+py3dt_args.extend(["--classification", args.classification])
 py3dt_args.append("/tmp/sample.xyz")
 
 # do the real processing
