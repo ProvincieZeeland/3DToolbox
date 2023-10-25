@@ -86,7 +86,7 @@ if args.verbose:
 py3dt_args = []
 if args.verbose:
   py3dt_args.append("-v")
-py3dt_args.extend("--classification")
+py3dt_args.append("--classification")
 py3dt_args.extend(["--srs_in", args.srs_in])
 py3dt_args.extend(["--srs_out", args.srs_out])
 py3dt_args.extend(["--out", args.out])
