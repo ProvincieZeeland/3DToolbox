@@ -62,7 +62,7 @@ Dit bestand is gebaseerd op https://www.tno.nl/media/1688/productieblad_geotop_m
 Middels het volgende commando wordt de point cloud gemaakt:
 
 ```bash
-py3dtiles convert -v --srs_in 28992 --srs_out 4978 ./sample_ready_for_py3dtiles.csv
+py3dtiles convert -v --classification --srs_in 28992 --srs_out 4978 ./sample_ready_for_py3dtiles.csv
 ```
 
 Er is een `xonsh` script gemaakt `gt2pc.xsh` om bovenstaande in 1 stap uit te voeren en optioneel nog wat zaken in te stellen als:
