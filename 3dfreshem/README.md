@@ -32,15 +32,18 @@ De kolommen zijn:
 
 **Let op**: door de kolomnamen met bijzondere tekens als `+ { }` is deze data niet eenvoudig direct met tools als gdal/ogr te benaderen. Het juist gebruik van enkele en dubbele quotes is essentieel.
 
-Om gebruik gemakkelijker te maken is er ook een `.vrt` bestand beschikbaar dat het direct gebruik in ogr/gdal of zelfs QGIS gemakkelijker maakt. Dit bestand heeft de volgende inhoud:
+Om gebruik gemakkelijker te maken is er ook een `.vrt` bestand beschikbaar dat het direct gebruik in ogr/gdal of zelfs QGIS gemakkelijker maakt. Dit bestand (zie hieronder) maakt een geometrie aan vanuit de puntcoördinaten en versimpelt de xyz- en "chloride_klassen"-kolomnamen.
 
 ```xml
 <OGRVRTDataSource> 
-    <OGRVRTLayer name="chloride_klassen"> 
+    <OGRVRTLayer name="sample"> 
         <SrcDataSource>sample.csv</SrcDataSource> 
         <GeometryType>wkbPoint</GeometryType> 
         <LayerSRS>EPSG:28992</LayerSRS> 
-        <GeometryField encoding="PointFromColumns" x="XG+ Gravity Center+" y="YG+ Gravity Center+" "z"="ZG+ Gravity Center+"/> 
+        <GeometryField encoding="PointFromColumns" x="XG+ Gravity Center+" y="YG+ Gravity Center+" z="ZG+ Gravity Center+"/>
+        <Field name="x" src="XG+ Gravity Center+" type="Real" />
+        <Field name="y" src="YG+ Gravity Center+" type="Real" />
+        <Field name="z" src="ZG+ Gravity Center+" type="Real" />
         <Field name="sample" src="SN+ Sample Number (READONLY)+" type="Integer" />   
         <Field name="laag" src="chloride_klassen{laag}" type="Real" />
         <Field name="midden" src="chloride_klassen{midden}" type="Real" />
@@ -48,6 +51,8 @@ Om gebruik gemakkelijker te maken is er ook een `.vrt` bestand beschikbaar dat h
     </OGRVRTLayer> 
 </OGRVRTDataSource>
 ```
+
+Als je het proces runt met dit vrt-bestand in plaats van het csv-bestand, doet GDAL (org2ogr) een on-the-fly transformatie van de data.
 
 **Let op**: de bestandsnaam van het in te lezen `.csv` bestand is hierin opgenomen. 
 
@@ -199,7 +204,7 @@ Het is vervolgens handig om het shell script `3dfreshem` te plaatsen in het zoek
 Indien het shell script `3dfreshem` is geplaatst op het zoekpad kan de container worden gebruikt middels een commando als:
 
 ```bash
-3dfreshem freshem2pc -v --clipsrc "57000 425000 58000 426000" sample.csv
+3dfreshem freshem2pc -v --clipsrc "57000 425000 58000 426000" sample.vrt
 ```
 
 Eventueel kan de container ook gebruikt worden zonder shell script middels een commando als:

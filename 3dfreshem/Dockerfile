@@ -1,6 +1,7 @@
 FROM ghcr.io/osgeo/gdal:ubuntu-small-latest
 
-RUN apt-get update && apt-get install -y liblaszip8 \
+RUN apt-get update && apt-get install -y git \
+					 liblaszip8 \
                                          python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
@@ -9,8 +10,10 @@ RUN pip3 install --upgrade pip
 # next line equivalent to: pip install pygments prompt-toolkit setproctitle xonsh
 RUN pip3 install 'xonsh[full]'
 RUN pip3 install laspy[laszip]
-RUN pip3 install py3dtiles
 RUN pip3 install xontrib-argcomplete xontrib-sh
+
+RUN git clone https://gitlab.com/Oslandia/py3dtiles.git
+RUN python -m pip install -e /py3dtiles
 
 # allow numba to do its thing even with unprivileged user
 ENV NUMBA_CACHE_DIR=/tmp
