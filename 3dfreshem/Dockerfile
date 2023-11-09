@@ -1,7 +1,7 @@
 FROM ghcr.io/osgeo/gdal:ubuntu-small-latest
 
 RUN apt-get update && apt-get install -y git \
-					 liblaszip8 \
+					                     liblaszip8 \
                                          python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
