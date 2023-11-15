@@ -63,7 +63,9 @@ if args.clipsrclayer: ogr_args.extend(["-clipsrclayer", args.clipsrclayer])
 
 ogr_args.extend(['-a_srs',f"EPSG:{ args.srs_in }", '-oo', 'AUTODETECT_TYPE=YES', '-oo', 'X_POSSIBLE_NAMES=x', '-oo', 'Y_POSSIBLE_NAMES=y', '-oo', 'Z_POSSIBLE_NAMES=z'])
 ogr_args.extend(['-dialect', 'sqlite'])
-ogr_args.extend(['-sql', f"select x,y,z * { args.multiplier }, 1, lut.R, lut.G, lut.B, lut.klasse + 20 FROM { os.path.splitext(os.path.basename(args.file))[0] } as sample { args.join_type } JOIN '{ args.color_table }'.lut as lut ON sample.lithoklasse = lut.klasse { where }" ])
+# Build query that prepares file according to format accepted by py3dtiles (X,Y,Z,Intensity,R,G,B,Class)
+# Class is raised with 100 to not interfere with standard point classes from LAS-specification
+ogr_args.extend(['-sql', f"select x,y,z * { args.multiplier }, 1, lut.R, lut.G, lut.B, lut.klasse + 100 FROM { os.path.splitext(os.path.basename(args.file))[0] } as sample { args.join_type } JOIN '{ args.color_table }'.lut as lut ON sample.lithoklasse = lut.klasse { where }" ])
 ogr_args.extend(['-f', "CSV"])
 ogr_args.extend(["/tmp/sample.csv", args.file])
 ogr_args.extend(["-lco", "STRING_QUOTING=IF_NEEDED"])
