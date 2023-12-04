@@ -63,25 +63,28 @@ if args.clipsrclayer: ogr_args.extend(["-clipsrclayer", args.clipsrclayer])
 
 ogr_args.extend(['-a_srs',f"EPSG:{ args.srs_in }", '-oo', 'AUTODETECT_TYPE=YES', '-oo', 'X_POSSIBLE_NAMES=x', '-oo', 'Y_POSSIBLE_NAMES=y', '-oo', 'Z_POSSIBLE_NAMES=z'])
 ogr_args.extend(['-dialect', 'sqlite'])
-ogr_args.extend(['-sql', f"select x,y,z * { args.multiplier }, lut.klasse / 10, lut.R, lut.G, lut.B FROM { os.path.splitext(os.path.basename(args.file))[0] } as sample { args.join_type } JOIN '{ args.color_table }'.lut as lut ON sample.lithoklasse = lut.klasse { where }" ])
+# Build query that prepares file according to format accepted by py3dtiles (X,Y,Z,Intensity,R,G,B,Class)
+# Class is raised with 100 to not interfere with standard point classes from LAS-specification
+ogr_args.extend(['-sql', f"select x,y,z * { args.multiplier }, 1, lut.R, lut.G, lut.B, lut.klasse + 100 FROM { os.path.splitext(os.path.basename(args.file))[0] } as sample { args.join_type } JOIN '{ args.color_table }'.lut as lut ON sample.lithoklasse = lut.klasse { where }" ])
 ogr_args.extend(['-f', "CSV"])
-ogr_args.extend(["/vsistdout/", args.file])
-ogr_args.extend(["-lco", "SEPARATOR=SPACE", "-lco", "STRING_QUOTING=IF_NEEDED"])
+ogr_args.extend(["/tmp/sample.csv", args.file])
+ogr_args.extend(["-lco", "STRING_QUOTING=IF_NEEDED"])
 
 # pre processing in ogr2ogr
-ogr2ogr @(ogr_args) | tail -n +2 > /tmp/sample.xyz
+ogr2ogr @(ogr_args)
 
 if args.verbose:
-  cat /tmp/sample.xyz
+  cat /tmp/sample.csv
 
 # Gather all arguments for py3dtiles command
 py3dt_args = []
 if args.verbose:
   py3dt_args.append("-v")
+py3dt_args.append("--classification")
 py3dt_args.extend(["--srs_in", args.srs_in])
 py3dt_args.extend(["--srs_out", args.srs_out])
 py3dt_args.extend(["--out", args.out])
-py3dt_args.append("/tmp/sample.xyz")
+py3dt_args.append("/tmp/sample.csv")
 
 # do the real processing
 py3dtiles convert @(py3dt_args)

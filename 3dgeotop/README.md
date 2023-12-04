@@ -16,20 +16,16 @@ Dit onderdeel van 3dgeotop is een converter om vanuit de csv betanden in de GeoT
 
 - de juiste velden selecteren
 - de meest waarschijnlijke lithoklasse omrekenen naar een RGB-waarde
-- de meest waarschijnlijke lithoklasse omrekenen naar een intensiteit waarde
+- de meest waarschijnlijke lithoklasse omzetten naar een classificatie
 - een verticale overdrijving (x 100) toepassen
 - de nodata velden weglaten
-- de kopregel met veldnamen weglaten
 
  Deze aanpassingen kunnen allemaal uitgevoerd worden in 1 commando:
 
 ```bash
 ogr2ogr -dialect sqlite \
-		-sql "select x,y,z * 100,lut.klasse / 10, lut.R, lut.G, lut.B FROM sample as sample LEFT JOIN 'lut.csv'.lut as lut ON sample.lithoklasse = lut.klasse" \
-		-f "CSV" /vsistdout/ sample.csv \
-		-lco "SEPARATOR=SPACE" \
-		| tail -n +2 \
-		> sample.xyz
+		-sql "select x,y,z * 100, 1, lut.R, lut.G, lut.B, lut.klasse + 20 FROM sample as sample LEFT JOIN 'lut.csv'.lut as lut ON sample.lithoklasse = lut.klasse" \
+		-f "CSV" sample_ready_for_py3dtiles.csv sample.csv 
 ```
 
 waarbij `lut.csv` een csv bestand is met de volgende inhoud:
@@ -66,7 +62,7 @@ Dit bestand is gebaseerd op https://www.tno.nl/media/1688/productieblad_geotop_m
 Middels het volgende commando wordt de point cloud gemaakt:
 
 ```bash
-py3dtiles convert -v --srs_in 28992 --srs_out 4978 ./sample.xyz 
+py3dtiles convert -v --classification --srs_in 28992 --srs_out 4978 ./sample_ready_for_py3dtiles.csv
 ```
 
 Er is een `xonsh` script gemaakt `gt2pc.xsh` om bovenstaande in 1 stap uit te voeren en optioneel nog wat zaken in te stellen als:
@@ -91,7 +87,7 @@ usage: gt2pc [-h] [-v] [--out OUT] [--nodata] [--multiplier MULTIPLIER]
              [--clipsrc CLIPSRC] [--clipsrclayer CLIPSRCLAYER]
              file
 
-This converter converts GeoTOP xyz files to 3Dtiles.
+This converter converts GeoTOP csv files to 3Dtiles.
 
 positional arguments:
   file                  The GeoTOP file to process to convert.
@@ -133,7 +129,8 @@ Dit geeft een `3dtiles` folder met daarin een 3D tile set met de point cloud met
 - verticale overdrijving: 100x
 - Punten zonder data niet opgeslagen
 - Kleuren toegekend volgens de standaard kleurentabel
-- De intensiteit ingesteld op lithoklasse / 10
+- De intensiteit ingesteld op 1
+- De classificatie ingesteld op de meest waarschijnlijke lithoklasse + 20
 
 Bij gebruik van een *boundig box* om te clippen is het correct gebruik van quotes belangrijk; bijvoorbeeld:
 
@@ -197,6 +194,3 @@ Een viewer als Cesium haalt zelf de juiste onderdelen op uit een point cloud. he
 Cesium.Cesium3DTileset.fromUrl('https://mijnserver.nl/tiles/3dtiles/tileset.json')
 ```
 
-### Nog te doen
-
-Het zou fijn zijn als de lithoklasse als `classification` veld opgenomen kan worden in de 3Dtiles. Dan hoeven de kleuren er niet bij de conversie al ingerekend te worden, maar kunnen deze in de viewer worden ingesteld. Helaas wordt dit nog niet ondersteund door `py3dtiles`.  Hiervoor is al wel een [issue aangemaakt](https://gitlab.com/Oslandia/py3dtiles/-/issues/136).
