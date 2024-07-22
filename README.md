@@ -1,6 +1,6 @@
-# 3DtoolboxNL
+# 3DToolboxNL
 
-Het project 3DtoolboxNL is gericht op het beschikbaar maken van open source tooling voor het werken met 3D informatie in met name Cesium, in de Nederlandse context.
+Het project 3DToolboxNL is gericht op het beschikbaar maken van open source tooling voor het werken met 3D informatie in met name Cesium, in de Nederlandse context.
 
 In dit project wordt niet alleen tooling ontwikkeld en beschikbaar gesteld, maar ook uitgebreid gedocumenteerd, zodat het gemakkelijk wordt om aan de slag te gaan.
 
