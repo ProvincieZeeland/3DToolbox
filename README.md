@@ -1,4 +1,5 @@
-# 3DtoolboxNL
+# 3DtoolboxNL is verplaatst naar: https://github.com/3DToolboxNL/3DToolboxNL
+
 
 Het project 3DtoolboxNL is gericht op het beschikbaar maken van open source tooling voor het werken met 3D informatie in met name Cesium, in de Nederlandse context.
 
